@@ -1,0 +1,18 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Audio dataset & raw recordings
+data/
+*.wav
+
+# PyTorch Checkpoints (Ignore huge weight files, keep template folder)
+models/*
+!models/.gitkeep
+
+# Environments & IDEs
+venv/
+.venv/
+.vscode/
+.idea/
+.DS_Store

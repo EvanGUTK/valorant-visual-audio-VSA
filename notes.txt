@@ -1,0 +1,1 @@
+Working on html, python, interpreter, training, CNN, and whether to record audio, fetch audio, or hook (dangerous).

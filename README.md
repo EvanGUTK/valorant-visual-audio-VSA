@@ -187,9 +187,3 @@ License
 This project is MIT licensed. See LICENSE for details.
 
 ---
-
-If you'd like, next steps can include:
-- creating a small CONTRIBUTING.md and LABEL_GUIDE.md describing how to record and label data reliably
-- adding a GitHub Actions workflow for linting and a lightweight smoke test
-- drafting an example pipeline automation (scripts) for dataset split, feature extraction, and model export
-

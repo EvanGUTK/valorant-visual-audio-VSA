@@ -11,8 +11,12 @@ Run locally:
   python scripts/envelope_example.py
 """
 
-from scripts.envelope_crypto_kms import LocalKmsMock, AwsKmsClient
-from scripts.envelope_crypto_crypto import encrypt_bytes, decrypt_bytes
+try:
+    from .envelope_crypto_kms import LocalKmsMock, AwsKmsClient
+    from .envelope_crypto_crypto import encrypt_bytes, decrypt_bytes
+except ImportError:  # pragma: no cover - supports running the script directly
+    from envelope_crypto_kms import LocalKmsMock, AwsKmsClient
+    from envelope_crypto_crypto import encrypt_bytes, decrypt_bytes
 
 
 def demo_local():

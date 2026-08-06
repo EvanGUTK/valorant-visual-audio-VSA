@@ -15,6 +15,11 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "alert_email" {
+  type    = string
+  default = "oncall@example.com"
+}
+
 variable "trail_name" {
   type    = string
   default = "project-cloudtrail"
@@ -44,6 +49,39 @@ resource "aws_s3_bucket" "cloudtrail_bucket" {
       days = 365
     }
   }
+}
+
+resource "aws_s3_bucket_policy" "cloudtrail_bucket_policy" {
+  bucket = aws_s3_bucket.cloudtrail_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AWSCloudTrailAclCheck"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+        Action   = "s3:GetBucketAcl"
+        Resource = aws_s3_bucket.cloudtrail_bucket.arn
+      },
+      {
+        Sid    = "AWSCloudTrailWrite"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.cloudtrail_bucket.arn}/*"
+        Condition = {
+          StringEquals = {
+            "s3:x-amz-acl" = "bucket-owner-full-control"
+          }
+        }
+      }
+    ]
+  })
 }
 
 // IAM role for CloudTrail to publish to CloudWatch Logs
@@ -86,6 +124,8 @@ resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
 }
 
 resource "aws_cloudtrail" "project_trail" {
+  depends_on = [aws_s3_bucket_policy.cloudtrail_bucket_policy]
+
   name                          = var.trail_name
   s3_bucket_name                = aws_s3_bucket.cloudtrail_bucket.bucket
   include_global_service_events = true

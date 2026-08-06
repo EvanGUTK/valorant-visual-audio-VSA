@@ -23,18 +23,19 @@ WASAPI / Stereo Mix capture                       CNN classifies clip
 UDP sender (sender_windows.py)                     Direction detection (stereo + HRTF)
                                                   Real-time HUD (receiver_ai_v2.py)
 
-Files (what's in this repo)
+Files (what's actually in this repo)
 
-- sender_windows.py — Captures WASAPI/Stereo Mix audio on Windows and streams over UDP.
-- receiver_mac.py — Top-down radar view (legacy frequency-threshold detector).
-- receiver_ai.py — Radar view powered by the trained CNN.
-- receiver_ai_v2.py — Minimal orbital HUD powered by the CNN (recommended for low distraction).
-- recorder.py — Interactive data collection tool for creating labeled clips during gameplay.
-- diagnose.py — Validates recorded clips for corruption or silence.
-- freq_finder.py — Live frequency inspection tool for calibration and debugging.
-- train.py — Training script: builds mel spectrograms, trains the CNN, saves checkpoint (modelv2.pth).
-- diagnose.py — Clip integrity checks and quick diagnostics.
-- data/ — (not checked in) expected dataset layout: data/<class>/*.wav
+- server.py — lightweight demo server / receiver endpoint (current implementation in repo).
+- web/index.html — simple demo frontend to visualize incoming events.
+- scripts/recorder.py — data collection helper script (present under scripts/).
+- scripts/diagnose.py — clip integrity checks (present under scripts/).
+- scripts/train.py — training helper script (present under scripts/).
+- requirements.txt — pinned dependencies for some scripts.
+- notes.txt — project notes and TODOs.
+- models/ — git-ignored folder for trained checkpoints (contains .gitkeep here).
+- LICENSE, .gitignore — repository metadata.
+
+Note: Other components referenced elsewhere in this README (for example sender_windows.py, receiver_ai_v2.py, receiver_ai.py, receiver_mac.py, and freq_finder.py) are design targets and are not present in this repository at the moment. The README documents the intended end-to-end pipeline and suggested file layout; add missing components in separate commits or pull requests as development proceeds.
 
 Requirements
 
@@ -149,24 +150,35 @@ Suggested CI / automation (ideas)
   - Optionally run a lightweight smoke test that verifies train.py or a small inference script runs on a tiny sample
   - Do NOT commit large datasets or model checkpoints to the repo; use release artifacts or a separate storage bucket.
 
-Directory layout (recommended)
+Directory layout (current and recommended)
 
-- sender_windows.py
-- receiver_ai_v2.py
-- receiver_ai.py
-- receiver_mac.py
-- recorder.py
-- train.py
-- diagnose.py
-- freq_finder.py
-- data/               # not committed; local dataset
+Present in this repository:
+
+- server.py
+- web/index.html
+- scripts/recorder.py
+- scripts/train.py
+- scripts/diagnose.py
+- requirements.txt
+- notes.txt
+- models/             # trained checkpoints (git-ignored; contains .gitkeep)
+
+Recommended (future/target layout for the complete VSA system):
+
+- sender_windows.py     # capture + UDP sender (Windows)
+- receiver_ai_v2.py     # minimal orbital HUD (receiver)
+- receiver_ai.py        # radar HUD powered by CNN
+- receiver_mac.py       # legacy radar view (frequency-threshold)
+- freq_finder.py        # calibration tool
+- data/                 # local dataset: data/<class>/*.wav
   - footstep/
   - gunshot/
   - spectre/
   - jump/
   - silence/
-- models/             # trained checkpoints (git-ignored)
-- docs/               # optional: design notes, dataset schema, label guide
+- docs/                 # design notes, dataset schema, label guide
+
+If you'd like, I can add stubs for the missing scripts (sender_windows.py, receiver_ai_v2.py, etc.) to this repository so the README's pipeline is immediately runnable; let me know if you'd prefer stubs or the README to keep describing the intended architecture only.
 
 Roadmap
 

@@ -1,0 +1,28 @@
+{
+  "name": "engineering-role-subagents",
+  "displayName": "Engineering Role Subagents",
+  "version": "1.0.0",
+  "description": "Fifteen specialized engineering-role subagents (architect, backend, frontend, AI/LLM, DevOps, security, database, SRE, QA, TPM, mobile, DX, data pipelines, refactoring, integrations) for parallel Cursor agent workflows.",
+  "author": {
+    "name": "Evan Goodman"
+  },
+  "license": "MIT",
+  "keywords": [
+    "subagents",
+    "roles",
+    "architecture",
+    "backend",
+    "frontend",
+    "devops",
+    "security",
+    "sre",
+    "qa"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "subagents",
+    "roles",
+    "multi-agent"
+  ],
+  "agents": "./agents/"
+}

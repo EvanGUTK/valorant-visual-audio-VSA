@@ -29,3 +29,11 @@ Common commands (run from repo root):
   `python scripts/envelope_example.py` — prints an encrypted blob and recovers the plaintext.
 - AWS KMS path (`AwsKmsClient` in `scripts/envelope_crypto_kms.py`) requires AWS credentials +
   a provisioned CMK; the local demo uses `LocalKmsMock` and needs no external services.
+
+### Engineering role subagents
+
+Fifteen custom subagents live in `.cursor/agents/` (also packaged under `cursor-roles-plugin/`
+for user-wide install). Invoke with `/principal-systems-architect`, `/senior-backend-engineer`,
+etc., or ask the parent agent to run several in parallel. See `cursor-roles-plugin/README.md`
+for installing into `~/.cursor/agents/` so the same roles apply to every project — project
+`.cursor/agents/` alone only covers this repo.
